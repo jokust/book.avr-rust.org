@@ -1,0 +1,700 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The AVR-Rust Guidebook</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="001-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="001.1-reporting-bugs.html"><strong aria-hidden="true">1.1.</strong> Reporting bugs</a></li></ol></li><li class="chapter-item expanded "><a href="002-installing-the-compiler.html"><strong aria-hidden="true">2.</strong> Installing the compiler</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="002.1-installing-required-third-party-tools.html"><strong aria-hidden="true">2.1.</strong> Installing required third party tools</a></li></ol></li><li class="chapter-item expanded "><a href="003-building-a-crate-for-avr.html"><strong aria-hidden="true">3.</strong> Building a crate for AVR</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="003.1-the-avr-unknown-gnu-atmega328-target.html"><strong aria-hidden="true">3.1.</strong> The built-in avr-unknown-gnu-atmega328 target</a></li><li class="chapter-item expanded "><a href="003.2-note-about-rust-build-std-flag.html"><strong aria-hidden="true">3.2.</strong> A note about the required Rust -Z build-std=&lt;CRATE,&gt; flag</a></li><li class="chapter-item expanded "><a href="003.3-example-building-blink.html"><strong aria-hidden="true">3.3.</strong> Example - Building the blink program for AVR</a></li></ol></li><li class="chapter-item expanded "><a href="004-flashing-a-crate-to-chip.html"><strong aria-hidden="true">4.</strong> Flashing a crate to a real AVR chip</a></li><li class="chapter-item expanded "><a href="005-add-avr-support-to-crate.html"><strong aria-hidden="true">5.</strong> Adding AVR support to a crate</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="005.1-the-target-specification-json-file.html"><strong aria-hidden="true">5.1.</strong> The target specification JSON file</a></li><li class="chapter-item expanded "><a href="005.2-adding-no-std-attribute.html"><strong aria-hidden="true">5.2.</strong> Adding the #[no_std] attribute</a></li><li class="chapter-item expanded "><a href="005.3-creating-an-executable-entry-point.html"><strong aria-hidden="true">5.3.</strong> Creating an executable entry point with #[no_main]</a></li><li class="chapter-item expanded "><a href="005.4-choosing-an-io-library.html"><strong aria-hidden="true">5.4.</strong> Choosing an input/output library</a></li></ol></li><li class="chapter-item expanded "><a href="006-new-crate-template-quickstart.html"><strong aria-hidden="true">6.</strong> Quick start using avr-rust/template-bin</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">The AVR-Rust Guidebook</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#1-introduction" id="1-introduction">1. Introduction</a></h1>
+<p><a href="https://en.wikipedia.org/wiki/Atmel_AVR">AVR</a> is a type of low-frequency (sub-20MHz in general) 8-bit microcontroller developed by Atmel and owned by Microchip.</p>
+<p>The AVR-Rust project aims to add support to the <a href="https://www.rust-lang.org/">Rust</a> ecosystem so that executables can be generated for AVR, taking
+advantage of Rust's safety guarantees and ergonomics.</p>
+<p>The following book describes what you need to know to use Rust with AVR support.</p>
+<p>The source code of this book can be <a href="https://github.com/avr-rust/book.avr-rust.com">found on GitHub</a>, pull requests are welcome.</p>
+<h2><a class="header" href="#resources-and-links" id="resources-and-links">Resources and links</a></h2>
+<ul>
+<li><a href="https://github.com/avr-rust/book.avr-rust.com">The source code of this book</a></li>
+<li><a href="https://www.avr-rust.com">The AVR-Rust project homepage</a></li>
+<li><a href="https://github.com/avr-rust">The AVR-Rust organization on GitHub</a></li>
+<li><a href="https://github.com/rust-lang/rust/labels/O-AVR">Known compiler issue list</a></li>
+<li><a href="https://github.com/avr-rust/rust/issues">Known compiler issue list (legacy, read only)</a></li>
+<li><a href="https://github.com/avr-rust/awesome-avr-rust">awesome-avr-rust - a publicly curated list of AVR crates and projects</a></li>
+<li><a href="https://github.com/avr-rust/template-bin">New executable template repository <code>avr-rust/template-bin</code></a></li>
+</ul>
+<h1><a class="header" href="#11-reporting-bugs" id="11-reporting-bugs">1.1. Reporting bugs</a></h1>
+<p>Bugs in this guide can be reported at the <a href="https://github.com/avr-rust/book.avr-rust.com/issues">GitHub repository for the book</a>.</p>
+<p>Bugs in Rust should be reported to Rust itself, ideally with the <code>[AVR]</code>  prefix on the issue title.
+After creation, the triage team will tag the issue as O-AVR for you.</p>
+<p>Bugs in ecosystem crates should be reported directly on the relevant crate's issue tracker where possible.</p>
+<p>If unclear, feel free to message the kind folks in the <a href="https://gitter.im/avr-rust/Lobby">avr-rust Gitter channel</a> for advice. Don't worry if you
+can't track it down to the right place 100% - know that it is better to report a bug in the wrong place than
+to not report it at all!</p>
+<h1><a class="header" href="#2-installing-the-compiler" id="2-installing-the-compiler">2. Installing the compiler</a></h1>
+<p>A few pieces of software must be installed to use Rust with AVR support</p>
+<ul>
+<li>A Rust compiler with AVR support enabled</li>
+<li>The source code of the compiler
+<ul>
+<li>This is required as <code>libcore</code> must be compiled lazily as AVRs are
+not generally ABI compatible with each other so the core library must be
+explicitly compiled for the AVR device that is being targeted at compile time.</li>
+</ul>
+</li>
+</ul>
+<p><strong>NOTE</strong>: Make sure to also install the <a href="./002.1-installing-required-third-party-tools.html">required third party tools</a>. This, importantly, <strong>includes the linker</strong>.</p>
+<h2><a class="header" href="#installing-via-rustup-recommended" id="installing-via-rustup-recommended">Installing via Rustup (recommended)</a></h2>
+<p>AVR support is included in the official Rust nightly compiler as of July 2020. To use AVR support, it
+is sufficient to install the official Rust <code>nightly</code> compiler, as well as the <code>rust-src</code> component.</p>
+<p><strong>First, make sure that <code>rustup</code> is installed.</strong> If it is not, install it from <a href="https://rustup.rs/">rustup.rs</a>.</p>
+<p>Then install the <code>nightly</code> and <code>rust-src</code> components by running this in a terminal:</p>
+<pre><code>$ rustup toolchain install nightly
+...
+$ rustup component add rust-src --toolchain nightly
+</code></pre>
+<p>Installation complete. You can proceed to the next part <a href="./003-building-a-crate-for-avr.html">3. Building a crate for AVR</a>.</p>
+<h2><a class="header" href="#installing-or-building-from-source" id="installing-or-building-from-source">Installing or building from source</a></h2>
+<p>AVR support is included in any standard Rust nightly build. The standard <a href="https://rustc-dev-guide.rust-lang.org/getting-started.html">Rust development instructions</a> apply here.</p>
+<p><strong>NOTE</strong>: Compiling Rust/LLVM can be very memory intensive. You may find compilation abruptly stopping on machines with less
+than ~10GB of RAM due to the operating system out-of-memory killer stopping it. If compilation keeps terminating, check
+if there is a hard-to-spot &quot;process interrupted by operating system&quot; message near the bottom of the logs. If so, consider
+lowering parallelism flags (<code>-j N</code>, etc) to reduce memory pressure.</p>
+<h1><a class="header" href="#21-installing-required-third-party-tools" id="21-installing-required-third-party-tools">2.1. Installing required third party tools</a></h1>
+<p>A number of third party tools are required to use AVR Rust.</p>
+<ul>
+<li>avr-gcc (only used as a linker frontend)</li>
+<li>avr-binutils (for linker support)</li>
+<li>avr-libc (for device-specific runtime libraries)</li>
+<li>avrdude (for flashing a real AVR chip)</li>
+</ul>
+<p>These should be installed by the operating system package manager.</p>
+<h2><a class="header" href="#arch-linux" id="arch-linux">Arch Linux</a></h2>
+<p>To install all required dependencies under Arch Linux, run</p>
+<pre><code class="language-bash">sudo pacman -S avr-gcc avr-libc avrdude
+</code></pre>
+<h2><a class="header" href="#fedora" id="fedora">Fedora</a></h2>
+<p>To install all required dependencies under Fedora Linux, run</p>
+<pre><code class="language-bash">sudo dnf install avr-gcc avr-libc avrdude
+</code></pre>
+<h2><a class="header" href="#ubuntu" id="ubuntu">Ubuntu</a></h2>
+<p>To install all required dependencies under Ubuntu Linux, run</p>
+<pre><code class="language-bash">sudo apt-get install binutils gcc-avr avr-libc avrdude
+</code></pre>
+<h2><a class="header" href="#linux" id="linux">Linux</a></h2>
+<p>If your distribution's package manager doesn't provide these tools, you can install them manually.</p>
+<h3><a class="header" href="#avr-toolchain" id="avr-toolchain">AVR Toolchain</a></h3>
+<p>The AVR toolchain is necessary for compilation, and can be downloaded for several platforms from the manufacturer's website:</p>
+<p>https://www.microchip.com/mplab/avr-support/avr-and-arm-toolchains-c-compilers</p>
+<p>Once you uncompress the tar.gz for your system, add the subdirectory <code>{platform}/bin</code> to your PATH.  For example, if you uncompressed the archive to <code>~/Downloads/avr8-gnu-toolchain-3.6.2.1759-linux.any.x86_64/</code>, then you'd add this to your <code>.bashrc</code> file:</p>
+<pre><code class="language-bash">PATH=$PATH:$HOME/Downloads/avr8-gnu-toolchain-3.6.2.1759-linux.any.x86_64/avr8-gnu-toolchain-linux_x86_64/bin/
+</code></pre>
+<h3><a class="header" href="#avrdude" id="avrdude">AVRDUDE</a></h3>
+<p>AVRDUDE is necessary to flash your compiled binary to an AVR chip.  It can be downloaded from the project website:</p>
+<p>http://download.savannah.gnu.org/releases/avrdude/</p>
+<p>Download and uncompress the latest version for your system, and follow the instructions in the <code>INSTALL</code> file.</p>
+<h2><a class="header" href="#macos" id="macos">macOS</a></h2>
+<p>Set up the <a href="https://github.com/osx-cross/homebrew-avr">homebrew-avr</a> tap, then install the packages:</p>
+<pre><code class="language-bash">brew install avr-binutils avr-gcc avrdude
+</code></pre>
+<p>Note that <code>avrdude</code> may be installed without the homebrew-avr tap.</p>
+<h1><a class="header" href="#3-building-a-crate-for-avr" id="3-building-a-crate-for-avr">3. Building a crate for AVR</a></h1>
+<p>After setting up the compiler, you may use it to generate assembly or machine code targeting a specific AVR microcontroller model.</p>
+<h2><a class="header" href="#choosing-a---target" id="choosing-a---target">Choosing a <code>--target</code></a></h2>
+<p>The Rust nightly compiler includes a built-in target for ATmega328 named <code>avr-unknown-gnu-atmega328</code></p>
+<p>If you wish to target a microcontroller other than ATmega328, or you want to change any of the
+default builtin options like the linking parameters, then you will need to export the builtin
+<code>avr-unknown-gnu-atmega328</code> target to a custom target specification JSON file and modify
+it to suit your needs.</p>
+<p>This target can be adapted to other microcontrollers as per the instructions in <a href="./003.1-the-avr-unknown-gnu-atmega328-target.html">3.1. The built-in <code>avr-unknown-gnu-atmega328</code> target</a>.</p>
+<p>In summary, there are two options:</p>
+<ul>
+<li>Use <code>rustc --target=avr-unknown-gnu-atmega328</code> to use the default, builtin GCC based target for ATmega328</li>
+<li>Or use <code>rustc --target=my-custom-avr-target.json</code> with either a JSON file adapted from the builtin
+<code>avr-unknown-gnu-atmega328</code> target above, or otherwise build the file you wish manually to avoid the
+default path entirely.</li>
+</ul>
+<h2><a class="header" href="#make-sure-you-use-the-nightly-version-of-rust-not-the-default-stable-channel" id="make-sure-you-use-the-nightly-version-of-rust-not-the-default-stable-channel">Make sure you use the nightly version of Rust, not the default stable channel</a></h2>
+<p>The best way to ensure a crate is using the Nightly compiler is to run <code>rustup override set nightly</code> inside a terminal
+within the root directory of the crate. After this is done, <code>cargo</code> will by-default use the AVR-enabled Nightly compiler
+any time <code>cargo</code> is used within the directory tree of the crate.</p>
+<h2><a class="header" href="#compiling-a-crate" id="compiling-a-crate">Compiling a crate</a></h2>
+<p>To compile and link an executable crate for AVR, run the following:</p>
+<p>Using the builtin <code>avr-unknown-gnu-atmega328</code> target:</p>
+<pre><code class="language-bash">cargo build -Z build-std=core --target avr-unknown-gnu-atmega328 --release
+</code></pre>
+<p>Using a custom target specification JSON:</p>
+<pre><code class="language-bash">cargo build -Z build-std=core --target /path/to/my-custom-avr-target.json --release
+</code></pre>
+<p>Either of these generate an AVR ELF file that can be subsequently flashed to a real device or ran inside a simulator.
+The ELF file will be available at <code>target/&lt;TARGET NAME&gt;/release/&lt;CRATE NAME&gt;.elf</code>.</p>
+<p>Notes:</p>
+<ul>
+<li><strong><code>-Z build-std=core</code> is required whenever AVR is being targeted</strong>. See <a href="./003.2-note-about-rust-build-std-flag.html">3.2. A note about the required Rust <code>-Z build-std=&lt;CRATE,&gt;</code> flag</a> for more details.</li>
+<li><code>--release</code>  is not strictly required - debug mode should be as correct as release mode - however, <strong>debug mode generates SLOW CODE, especially on AVR</strong>. Release mode is much better.</li>
+</ul>
+<p><strong>Example</strong>: An in-context example of compiling a crate is given for the LED blinking example in <a href="./003.3-example-building-blink.html">3.3. Example - Building the <code>blink</code> program for AVR</a>.</p>
+<h3><a class="header" href="#targeting-a-different-microcontroller-model" id="targeting-a-different-microcontroller-model">Targeting a different microcontroller model</a></h3>
+<p>The recommended way to do this is with a custom target specification JSON file per the instructions in <a href="./003.1-the-avr-unknown-gnu-atmega328-target.html">3.1. The built-in <code>avr-unknown-gnu-atmega328</code> target</a>.</p>
+<h1><a class="header" href="#31-the-built-in-avr-unknown-gnu-atmega328-target" id="31-the-built-in-avr-unknown-gnu-atmega328-target">3.1. The built-in <code>avr-unknown-gnu-atmega328</code> target</a></h1>
+<p>The Rust nightly compiler contains a built-in target, <code>avr-unknown-gnu-atmega328</code>, that
+generates code for the AVR <a href="https://en.wikipedia.org/wiki/ATmega328">ATmega328</a> using the
+GNU AVR-GCC toolchain for linking support.</p>
+<h2><a class="header" href="#targeting-custom-microcontrollers-by-adapting-avr-unknown-gnu-atmega328" id="targeting-custom-microcontrollers-by-adapting-avr-unknown-gnu-atmega328">Targeting custom microcontrollers by adapting 'avr-unknown-gnu-atmega328'</a></h2>
+<p>See the section <a href="./005.1-the-target-specification-json-file.html">5.1. The Target Specification JSON File</a> for
+more information about how Rust target specification JSON files work.</p>
+<p>To generate a Rust target specification JSON file from the builtin:</p>
+<pre><code class="language-bash">rustc --print target-spec-json -Z unstable-options --target avr-unknown-gnu-atmega328 &gt; my-custom-avr-unknown-gnu-atmega328.json
+</code></pre>
+<p>This prints the target specification JSON file <code>my-custom-avr-unknown-gnu-atmega328.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;arch&quot;: &quot;avr&quot;,
+  &quot;cpu&quot;: &quot;atmega328&quot;,
+  &quot;data-layout&quot;: &quot;e-P1-p:16:8-i8:8-i16:8-i32:8-i64:8-f32:8-f64:8-n8-a:8&quot;,
+  &quot;eh-frame-header&quot;: false,
+  &quot;env&quot;: &quot;&quot;,
+  &quot;exe-suffix&quot;: &quot;.elf&quot;,
+  &quot;executables&quot;: true,
+  &quot;is-builtin&quot;: true,
+  &quot;late-link-args&quot;: {
+    &quot;gcc&quot;: [
+      &quot;-lgcc&quot;
+    ]
+  },
+  &quot;linker&quot;: &quot;avr-gcc&quot;,
+  &quot;linker-flavor&quot;: &quot;gcc&quot;,
+  &quot;linker-is-gnu&quot;: true,
+  &quot;llvm-target&quot;: &quot;avr-unknown-unknown&quot;,
+  &quot;os&quot;: &quot;unknown&quot;,
+  &quot;pre-link-args&quot;: {
+    &quot;gcc&quot;: [
+      &quot;-mmcu=atmega328&quot;,
+      &quot;-Wl,--as-needed&quot;
+    ]
+  },
+  &quot;target-c-int-width&quot;: &quot;16&quot;,
+  &quot;target-endian&quot;: &quot;little&quot;,
+  &quot;target-pointer-width&quot;: &quot;16&quot;,
+  &quot;vendor&quot;: &quot;unknown&quot;
+}
+</code></pre>
+<p>To adapt this file to target a different microcontroller:</p>
+<ul>
+<li>Replace the top-level <code>&quot;cpu&quot;: &quot;atmega328&quot;</code> with <code>&quot;cpu&quot;: &quot;YOUR-AVR-VARIANT-NAME&quot;</code></li>
+<li>Replace <code>&quot;-mmcu=atmega328&quot;</code> with <code>&quot;-mmcu=YOUR-AVR-VARIANT-NAME&quot;</code></li>
+</ul>
+<p>The file can then be passed to Rust via the <code>rustc --target &lt;JSON FILE PATH&gt;</code> instead of
+<code>rustc --target avr-unknown-gnu-atmega328</code>, which will tailor the generated code to your
+desired microcontroller.</p>
+<p>It is also possible to customize link parameters if desired by modifying the JSON file.</p>
+<h2><a class="header" href="#compiling-for-avr-without-the-gnu-toolchain" id="compiling-for-avr-without-the-gnu-toolchain">Compiling for AVR without the GNU toolchain</a></h2>
+<p>At the moment, the only builtin AVR target <code>avr-unknown-gnu-atmega328</code> always requires
+AVR-GCC, AVR-libc and AVR-binutils from the GNU project.</p>
+<p>The LLVM LLD linker has some limited support for AVR which in the future could be leveraged
+to allow compiling AVR Rust binaries without the dependency on the GNU toolchain. Some work
+on <code>compiler-builtins</code> and others would also be required. At the moment, the GNU toolchain
+is a hard dependency.</p>
+<h1><a class="header" href="#32-a-note-about-the-required-rust--z-build-stdcrate-flag" id="32-a-note-about-the-required-rust--z-build-stdcrate-flag">3.2. A note about the required Rust <code>-Z build-std=&lt;CRATE,&gt;</code> flag</a></h1>
+<p>AVR-Rust is not distributed with a pre-built libcore crate. Instead, it is compiled on-demand when a crate uses it via the Rust <code>-Z build-std</code> flag.</p>
+<p>There are many hundreds of variants of AVR microcontroller, and it is not feasible to distribute runtime libraries for all of them within a regular Rust distribution.</p>
+<p>Due to this, any time a crate is built for AVR, <code>-Z build-std=core</code> should be passed to <code>cargo</code>.</p>
+<h2><a class="header" href="#example" id="example">Example</a></h2>
+<pre><code class="language-bash">cargo build -Z build-std=core --target avr-atmega328p.json --release
+</code></pre>
+<h2><a class="header" href="#what-happens-if-you-dont-pass-it" id="what-happens-if-you-dont-pass-it">What happens if you don't pass it</a></h2>
+<p>Then you will get a &quot;cannot find crate for 'core'&quot; error when you compile the crate. The only crates that can
+avoid this are those that are <code>#[no_core]</code> crates, such as <code>libcore</code> itself.</p>
+<h2><a class="header" href="#more-information" id="more-information">More information</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/nightly/cargo/reference/unstable.html#build-std">The official Rust docs on the unstable <code>build-std</code> flag</a></li>
+<li><a href="https://github.com/rust-lang/wg-cargo-std-aware">Tracking repository for the std-aware-cargo Working Group</a></li>
+</ul>
+<h1><a class="header" href="#33-example---building-the-blink-program-for-avr" id="33-example---building-the-blink-program-for-avr">3.3. Example - Building the <code>blink</code> program for AVR</a></h1>
+<p>This shell snippet shows an example that will build the LED blinking example
+for AVR.</p>
+<pre><code class="language-bash"># fetch and prepare the blink crate (only needs to be done once).
+$ git clone https://github.com/avr-rust/blink.git
+$ cd blink
+$ rustup override set nightly
+
+# Configure the 'ruduino' crate with a MCU frequency of 16MHz
+$ export AVR_CPU_FREQUENCY_HZ=16000000
+
+# compile the blink crate to an ELF file targeting atmega328p.
+$ cargo build -Z build-std=core --target avr-atmega328p.json --release
+</code></pre>
+<p>After compilation, the final ELF executable will be available at <code>target/avr-atmega328p/release/blink.elf</code>, ready to be flashed to a device
+or ran inside a simulator.</p>
+<pre><code class="language-bash">$ file target/avr-atmega328p/release/blink.elf
+target/avr-atmega328p/release/blink.elf: ELF 32-bit LSB executable, Atmel AVR 8-bit, version 1 (SYSV), statically linked, with debug_info, not stripped
+</code></pre>
+<p>Other AVR microcontroller models may be targeted by simply copying and modifying <code>avr-atmega328p.json</code>.</p>
+<h1><a class="header" href="#4-flashing-a-crate-to-a-real-avr-chip" id="4-flashing-a-crate-to-a-real-avr-chip">4. Flashing a crate to a real AVR chip</a></h1>
+<p>The <a href="https://www.nongnu.org/avrdude/">AVRDUDE</a> utility is recommended for flashing the final ELF file to a physical AVR microcontroller.</p>
+<p>Flashing a Rust ELF file is no different to flashing a regular AVR-GCC C/C++ generated ELF file.</p>
+<ul>
+<li><a href="https://www.nongnu.org/avrdude/">AVRDUDE Project Homepage</a></li>
+<li><a href="http://ladyada.net/learn/avr/avrdude.html">LadyADA AVRDUDE Tutorial</a></li>
+</ul>
+<h2><a class="header" href="#arduino-uno" id="arduino-uno">Arduino Uno</a></h2>
+<p>Connect your Arduino Uno to your computer, and use <code>avrdude</code> to flash your crate. The example below uses the output from <a href="./003.2-example-building-blink.html">the <code>blink</code> example</a>.</p>
+<pre><code class="language-bash">avrdude -patmega328p -carduino -P[PORT] -b115200 -D -Uflash:w:target/avr-atmega328p/release/blink.elf:e
+</code></pre>
+<p>where</p>
+<ul>
+<li><code>-patmega328p</code> is the AVR part number</li>
+<li><code>-carduino</code> is the programmer</li>
+<li><code>-P[PORT]</code> is the serial port of your connected Arduino
+<ul>
+<li>On Linux &amp; macOS, replace <code>[PORT]</code> with your Arduino's serial port (like <code>/dev/ttyUSB0</code>)</li>
+</ul>
+</li>
+<li><code>-b115200</code> is the baud rate</li>
+<li><code>-D</code> disables flash auto-erase</li>
+<li><code>-Uflash:w:target/avr-atmega328p/release/blink.elf:e</code> writes the <code>blink.elf</code> program to the Arduino's flash memory</li>
+</ul>
+<p>For more debugging information, run <code>avrdude</code> with one or more <code>-v</code> flags.</p>
+<p>Note: on older Arduino versions, you may get a series of <code>avrdude: stk500_getsync(): not in sync: resp=0x00</code> errors indicating you need to use a slower baud rate:</p>
+<pre><code class="language-bash">avrdude -patmega328p -carduino -P/dev/[PORT] -b57600 -D -Uflash:w:target/avr-atmega328p/release/blink.elf:e
+</code></pre>
+<h1><a class="header" href="#5-summary-of-steps" id="5-summary-of-steps">5. Summary of Steps</a></h1>
+<h2><a class="header" href="#initial-target-independent-steps-for-creating-a-new-crate" id="initial-target-independent-steps-for-creating-a-new-crate">Initial target-independent steps for creating a new crate</a></h2>
+<p>This first step is not AVR specific.</p>
+<pre><code class="language-bash"># Create a new binary project. You may also create a new library project with '--lib'.
+cargo new --bin my-new-project
+cd my-new-project
+
+# AVR requires the nightly compiler
+rustup override set nightly
+</code></pre>
+<h2><a class="header" href="#a-href0051-the-target-specification-json-filehtmlstep-1-adding-a-target-specification-json-file-for-avra" id="a-href0051-the-target-specification-json-filehtmlstep-1-adding-a-target-specification-json-file-for-avra"><a href="./005.1-the-target-specification-json-file.html">Step 1. Adding a target specification JSON file for AVR</a></a></h2>
+<p>Compared to most Rust targets like X86 or ARM, the AVR family of microcontrollers
+cannot be cleanly modelled under different &quot;families&quot; of chips that are
+ELF-compatible. This is due to the fact that there are special variants of chips
+with nonstandard ISA support, as well as the ELF <code>e_flags</code> field which has a value
+that also has special cases for certain microcontrollers.</p>
+<p>The upstream Rust compiler does not provide built-in targets for specific AVR
+microcontrollers. Instead, a target specification JSON file targeting a specific
+AVR device must be passed to Rust and Cargo.</p>
+<p><a href="./005.1-the-target-specification-json-file.html">Here</a> are the steps for creating and using a target specification
+JSON file for AVR.</p>
+<h2><a class="header" href="#a-href0052-adding-no-std-attributehtmlstep-2-adding-the-no_std-attribute-to-your-crate-roota" id="a-href0052-adding-no-std-attributehtmlstep-2-adding-the-no_std-attribute-to-your-crate-roota"><a href="./005.2-adding-no-std-attribute.html">Step 2. Adding the <code>#[no_std]</code> attribute to your crate root</a></a></h2>
+<p>Like many embedded targets, the standard library is not supported and so it must be opted out of.</p>
+<h2><a class="header" href="#a-href0053-creating-an-executable-entry-pointhtmlstep-3-creating-an-executable-entry-point-with-no_maina" id="a-href0053-creating-an-executable-entry-pointhtmlstep-3-creating-an-executable-entry-point-with-no_maina"><a href="./005.3-creating-an-executable-entry-point.html">Step 3. Creating an executable entry point with <code>#[no_main]</code></a></a></h2>
+<p>As we are using the device-specific startup runtime libraries for C/C++ under AVR-GCC, we must bypass Rust's
+usual handling of the main function so that the main function is correctly picked up by the GCC startup libraries.</p>
+<h2><a class="header" href="#a-href0054-choosing-an-io-libraryhtmlstep-4-choosing-an-inputoutput-librarya" id="a-href0054-choosing-an-io-libraryhtmlstep-4-choosing-an-inputoutput-librarya"><a href="./005.4-choosing-an-io-library.html">Step 4. Choosing an input/output library</a></a></h2>
+<p>Use an existing library or write your own - your choice.</p>
+<p>Recommended is <a href="https://github.com/rust-embedded/embedded-hal">embedded-hal</a>, which provides
+a architecture-independent way to expose GPIO pins and peripherals that works
+across devices such as AVR and ARM.</p>
+<h2><a class="header" href="#step-n---more-documentation-is-on-its-way-in-the-meantime-a-hrefhttpsgithubcomavr-rustblinkavr-rustblinka-serves-as-a-reference-implementation" id="step-n---more-documentation-is-on-its-way-in-the-meantime-a-hrefhttpsgithubcomavr-rustblinkavr-rustblinka-serves-as-a-reference-implementation">Step N. - More documentation is on its way. In the meantime, <a href="https://github.com/avr-rust/blink/">avr-rust/blink</a> serves as a reference implementation</a></h2>
+<h1><a class="header" href="#51-the-target-specification-json-file" id="51-the-target-specification-json-file">5.1. The target specification JSON file</a></h1>
+<p>External resources:</p>
+<ul>
+<li><a href="https://docs.rust-embedded.org/embedonomicon/custom-target.html">The Embedonomicon on custom targets</a></li>
+<li><a href="https://rust-lang.github.io/rfcs/0131-target-specification.html">rust-lang RFC on target specification JSON files</a></li>
+<li><a href="https://doc.rust-lang.org/rustc/targets/custom.html">Upstream Rust documentation on custom target specifications</a> [outdated, <code>xargo</code> is no longer required]</li>
+</ul>
+<p>Rust provides a built-in list of target specifications that are viewable via <code>rustc --print target-list</code>. A custom target specification JSON file may
+be written to override and tweak various target-specific options, such as linker scripts, flags, and LLVM options.</p>
+<p>When compiling for AVR, a specific microcontroller variant/model must be targeted. This allows LLVM
+to generate instructions that confirm to each particular microcontroller's ABI and supported instruction
+set.</p>
+<p>The target specification JSON file:</p>
+<ul>
+<li>May live in any directory - most often, committed to version control.</li>
+<li>Any file name you like, so long as it's JSON</li>
+<li>Is given to Rust via the <code>--target my-target-spec.json</code>. For example, <code>cargo build --target ./targets/my-target-spec.json</code>.</li>
+</ul>
+<h2><a class="header" href="#an-example---using-the-gnu-toolchain-for-linking-and-compiler-support-libraries" id="an-example---using-the-gnu-toolchain-for-linking-and-compiler-support-libraries">An example - using the GNU toolchain for linking and compiler support libraries</a></h2>
+<p>Here is an example target specification JSON file for the AVR atmega328p.</p>
+<p>This target specification:</p>
+<ul>
+<li>Enables the GNU AVR linker through the <code>avr-gcc</code> compiler frontend</li>
+<li>Tells the linker to include <code>libgcc</code> (as compiler-rt for AVR is not yet fully supported)</li>
+<li>Tells Rust not to pass the <code>--eh-frame-hdr</code> argument to the linker, which isn't supported by AVR-GCC and will cause and error if omitted.</li>
+<li>Instructs LLVM to use the <code>avr-unknown-unknown</code> target specifically for the <code>atmega328p</code> microcontroller</li>
+<li>Explicitly passes an <code>-mmcu</code> argument to the linker to ensure runtime libraries are not skipped by the linker</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;arch&quot;: &quot;avr&quot;,
+  &quot;cpu&quot;: &quot;atmega328p&quot;,
+  &quot;data-layout&quot;: &quot;e-P1-p:16:8-i8:8-i16:8-i32:8-i64:8-f32:8-f64:8-n8-a:8&quot;,
+  &quot;env&quot;: &quot;&quot;,
+  &quot;executables&quot;: true,
+  &quot;linker&quot;: &quot;avr-gcc&quot;,
+  &quot;linker-flavor&quot;: &quot;gcc&quot;,
+  &quot;linker-is-gnu&quot;: true,
+  &quot;llvm-target&quot;: &quot;avr-unknown-unknown&quot;,
+  &quot;no-compiler-rt&quot;: true,
+  &quot;os&quot;: &quot;unknown&quot;,
+  &quot;position-independent-executables&quot;: false,
+  &quot;exe-suffix&quot;: &quot;.elf&quot;,
+  &quot;eh-frame-header&quot;: false,
+  &quot;pre-link-args&quot;: {
+    &quot;gcc&quot;: [&quot;-mmcu=atmega328p&quot;]
+  },
+  &quot;late-link-args&quot;: {
+    &quot;gcc&quot;: [&quot;-lgcc&quot;]
+  },
+  &quot;target-c-int-width&quot;: &quot;16&quot;,
+  &quot;target-endian&quot;: &quot;little&quot;,
+  &quot;target-pointer-width&quot;: &quot;16&quot;,
+  &quot;vendor&quot;: &quot;unknown&quot;
+}
+</code></pre>
+<h3><a class="header" href="#adapting-to-another-microcontroller-variant" id="adapting-to-another-microcontroller-variant">Adapting to another microcontroller variant</a></h3>
+<p>Adapting a target specification JSON to another AVR variant is trivial.</p>
+<p>Options that must be updated to target individual microcontroller variants:</p>
+<ul>
+<li><code>cpu</code> - set to the lower-case model name of the desired AVR variant</li>
+<li><code>pre-link-args</code> - the correct <code>-mmcu</code> option, always equal to the <code>cpu</code>, must be updated</li>
+</ul>
+<h1><a class="header" href="#52-adding-the-no_std-attribute-to-your-crate" id="52-adding-the-no_std-attribute-to-your-crate">5.2. Adding the <code>#[no_std]</code> attribute to your crate</a></h1>
+<h2><a class="header" href="#external-resources" id="external-resources">External resources</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/1.7.0/book/no-stdlib.html">Rust guide on crates with no stdlib</a></li>
+<li><a href="https://docs.rust-embedded.org/embedonomicon/smallest-no-std.html">The embedonomicon on <code>#[no_std]</code> crates</a></li>
+</ul>
+<h2><a class="header" href="#adding-no_std" id="adding-no_std">Adding <code>#[no_std]</code></a></h2>
+<p>As an embedded target with no operating system, many faculties that the Rust
+standard library requires are not and could not be supported on AVR.</p>
+<p>Because of this, only <code>#[no_std]</code> crates may be compiled for AVR.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// src/main.rs or src/lib.rs
+
+#![no_std]
+
+fn my_function() {
+    // ...
+}
+
+// ...
+<span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#53-creating-an-executable-entry-point-with-no_main" id="53-creating-an-executable-entry-point-with-no_main">5.3. Creating an executable entry point with <code>#[no_main]</code></a></h1>
+<p>The standard Rust AVR toolchain will use AVR-GCC's linker and chip-specific startup runtime libraries.
+Due to this, it is necessary to override Rust's default behaviour for the main function and instead
+write one that looks exactly like a AVR-GCC C/C++ main function so that the regular AVR-GCC libraries
+will link to it correctly.</p>
+<p>To define a <code>main</code> function for AVR:</p>
+<ul>
+<li>Add the <code>#![no_main]</code> attribute to the top of the crate root (<code>src/main.rs</code>)</li>
+<li>Add a custom <code>main</code> function callable from C that will be picked up by AVR-GCC's startup libraries</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">// src/main.rs
+
+#![no_std] // from the previous step
+#![no_main]
+
+#[no_mangle]
+pub extern fn main() {
+}
+</code></pre></pre>
+<p>Notes:</p>
+<ul>
+<li>The <code>#![no_main]</code> attribute tells Rust to skip its usual expectations on the main function, instead
+letting the developer manually handle it. In the usual case for AVR, the target specification JSON file
+will link startup files from AVR-GCC and thus the ABI of the Rust <code>main</code> function must match that
+of the of AVR-GCC startup files.</li>
+<li>These steps can be applied to any executable within a crate, including those in the <code>examples/</code> directory
+for a library and those injected via <code>[[bin]]</code> attributes in the <code>Cargo.toml</code>.</li>
+</ul>
+<h1><a class="header" href="#54-choosing-an-inputoutput-library" id="54-choosing-an-inputoutput-library">5.4. Choosing an input/output library</a></h1>
+<p>To communicate with the outside world, you will need to use the AVR's built in IO registers to configure and access the electrical pins on the outside of the chip.</p>
+<h2><a class="header" href="#external-resources-1" id="external-resources-1">External resources</a></h2>
+<ul>
+<li><a href="https://maker.pro/custom/tutorial/learn-the-basics-of-io-pins-for-an-avr-microcontroller">Tutorial - Learn the Basics of I/O Pins for an AVR Microcontroller (examples in C)</a></li>
+</ul>
+<h2><a class="header" href="#the-problem-space-of-io-on-avr" id="the-problem-space-of-io-on-avr">The problem space of IO on AVR</a></h2>
+<ul>
+<li>Reading from or writing to an IO pin is as easy as reading a byte from or writing a byte to the correct location in memory</li>
+<li>The main issue is identifying which memory locations assigned to which physical pins and peripherals for each chip</li>
+</ul>
+<p>Rather than using bare-metal IO tied to specific AVR chips, it is recommended to use an abstraction layer over the actual I/O
+register manipulation.</p>
+<h2><a class="header" href="#a-bare-metal-example-of-io" id="a-bare-metal-example-of-io">A bare-metal example of IO</a></h2>
+<p>This example uses hardcoded IO register locations for the ATMega328p. It may work for
+some other AVR devices in the same family, but others will use different IO register
+memory mappings and so will not produce the expected output when ran on these devices.</p>
+<p><strong>NOTE</strong>: Executables should prefer using an abstraction layer over the actual I/O such as <code>embedded-hal</code>
+rather than writing to microcontroller-specific I/O registers directly.</p>
+<pre><pre class="playground"><code class="language-rust">#![no_std]
+#![no_main]
+
+extern crate avr_std_stub;
+
+/// The data direction register for PORT B, which is mapped to 0x24 in memory on the atmega328.
+const DDRB: *mut u8 = 0x24 as *mut u8;
+/// The pin status register for PORT B, which is mapped to 0x25 in memory on the atmega328.
+const PORTB: *mut u8 = 0x25 as *mut u8;
+
+#[no_mangle]
+pub extern fn main() {
+    unsafe {
+        // Set the upper four physical pins on PORT B to inputs, the lower four to outputs.
+        // The AVR interprets '1' in the data direction register as 'output', '0' input
+        // for the corresponding pin.
+        core::ptr::write_volatile(DDRB, core::ptr::read_volatile(DDRB) | 0b00001111);
+
+        // Write half of the output pins as high, the other half low.
+        core::ptr::write_volatile(PORTB, 0b00001010);
+    }
+}
+</code></pre></pre>
+<h2><a class="header" href="#high-level-libraries-for-io-on-avr" id="high-level-libraries-for-io-on-avr">High level libraries for IO on AVR</a></h2>
+<h3><a class="header" href="#the-embedded-hal-hardware-abstraction-layer" id="the-embedded-hal-hardware-abstraction-layer">The <code>embedded-hal</code> Hardware abstraction layer</a></h3>
+<p>The <code>embedded-hal</code> project exposes a device-independent set of traits that can be implemented
+by crates for specific devices. In this manner, one crate can be written to target multiple
+different embedded device architectures like ARM, MSP430, and AVR.</p>
+<p><a href="https://github.com/rust-embedded/embedded-hal">The embedded-hal project</a></p>
+<p>embedded-hal implementations for AVR:</p>
+<ul>
+<li><a href="https://github.com/Rahix/avr-hal">Rahix/avr-hal</a>
+<ul>
+<li>Supports <code>atmega32u4</code>, <code>attiny85</code>, <code>atmega328p</code>, <code>atmega1280</code></li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#the-avr-specific-a-hrefhttpsgithubcomavr-rustruduinoavr-rustruduinoa-crate" id="the-avr-specific-a-hrefhttpsgithubcomavr-rustruduinoavr-rustruduinoa-crate">The AVR-specific <a href="https://github.com/avr-rust/ruduino"><code>avr-rust/ruduino</code></a> crate</a></h3>
+<p><strong>Caveat</strong>: This crate can and will only work for AVR. Depending on this crate directly will lock
+you out of targeting architectures other than AVR.</p>
+<p>The ruduino library provides a high-level type-safe API for interacting with the AVR IO registers.</p>
+<p>Driven from the official <code>.atdf</code> AVR device specification files, this crate exposes all available
+IO registers for any AVR device you wish to target.</p>
+<p>At the moment, the high level bindings in <code>ruduino</code> are limited. You have access to all of
+the peripherals, but you will need to write to the expected IO registers manually.</p>
+<h3><a class="header" href="#others" id="others">Others?</a></h3>
+<p>Pull requests to <a href="https://github.com/avr-rust/book.avr-rust.com">github.com/avr-rust/book.avr-rust.com</a> welcome!</p>
+<h1><a class="header" href="#6-quick-start-from-template" id="6-quick-start-from-template">6. Quick start from template</a></h1>
+<h2><a class="header" href="#quick-start" id="quick-start">Quick start</a></h2>
+<p>The quickest way to get going is to clone</p>
+<pre><code class="language-bash"># Download and extract the template repository to the current directory.
+curl &quot;https://codeload.github.com/avr-rust/template-bin/tar.gz/master&quot; | tar xvzf -
+
+# Then update the package name in Cargo.toml
+sed -i 's/template-bin/$YOUR_CRATE_NAME/g' template-bin-master/Cargo.toml
+# And rename the folder
+mv template-bin-master $YOUR_CRATE_NAME
+
+# Prepare a new Git repository
+cd $YOUR_CRATE_NAME
+git init
+</code></pre>
+<p>Then, to build an ELF file at <code>target/avr-atmega328p/release/$YOUR_CRATE_NAME.elf</code>, run:</p>
+<pre><code class="language-bash">cargo build --target avr-atmega328p.json -Z build-std=core --all --release
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
